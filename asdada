@@ -34,7 +34,7 @@ void timer_2_config(void){
     T2CONbits.TCKPS=0;                  // prescaler (0==1:1)
                                         // con el TM2 a 0 sería (2^16)*1/10Mhz -> 6,55 ms
     TMR2 = 15535;                       // 65535 - 50000 (5 ms) 
-    T2CONbits.TON=1;                    // timer activado
+    T2CONbits.TON=0;                    // timer activado
 
     IEC0bits.T2IE=1;                    // habilita interrupción timer 2
     IPC1bits.T2IP=7;                    // prioridad del timer 2 a nivel 7 (máxima) 
