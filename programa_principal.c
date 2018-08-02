@@ -46,6 +46,10 @@ unsigned char contador, contador_1, flag_led, flag_CAN, n=0, flag_alive=0, cont_
 #include <stdlib.h>
 #include <p33ep128gp502.h>
 
+
+// ESTO ES UNA PRUEBA PARA VER SI REALMENTE FUNCIONA LA FUNCIÓN DE BRANCH Y DE MERGE
+// DE GITHUB
+
 /*--------------------------------------------------
                      *    TIMER 2       *
  * Se entra en la interrupción cada 5 ms. 
