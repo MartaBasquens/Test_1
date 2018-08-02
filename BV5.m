@@ -1,14 +1,12 @@
 clear all
 close all
 
-%--- 
-% ESTO ES UNA PRUEBA PARA GITHUB
 
 %-----------------------------------------------------------------------------
 % Lectura de la imatge
 %----------------------
  fprintf('\n');
- str = input(' Nom del Fitxer que contÈ la imatge -- ','s'); %S'introdueix el nom del fitxer que contÈ la imatge.
+ str = input(' Nom del Fitxer que cont√© la imatge -- ','s'); %S'introdueix el nom del fitxer que cont√© la imatge.
  imatge = imread(str);                                       %Es llegeix la imatge.
  imshow(imatge)                                              %Es visualitza la imatge a la pantalla.
  
@@ -16,26 +14,26 @@ close all
 % Reconeixement
 %----------------
 %-----------------------------------------------------------------------------
-%1. BinaritzaciÛ
+%1. Binaritzaci√≥
 %-----------------------------------------------------------------------------
-imbw=im2bw(imatge,graythresh(imatge));                         %BinaritzaciÛ de la imatge. 
+imbw=im2bw(imatge,graythresh(imatge));                         %Binaritzaci√≥ de la imatge. 
 figure,imshow(imbw)                                            %Es visualitza la imatge a la pantalla. 
 
 
-%Veiem que amb la binaritzaciÛ hi ha zones de fons que es tracten com a
-%imatge, per tant s'hauran d'aplicar filtres morfolÚgics. 
+%Veiem que amb la binaritzaci√≥ hi ha zones de fons que es tracten com a
+%imatge, per tant s'hauran d'aplicar filtres morfol√≤gics. 
 se = strel ('disk', 25);                                        %S'utilitza un element estructural de la imatge en forma de disc de radi 25. 
 imf1=imopen(imbw,se);                                           %Es fa una apertura de la imatge resultant.
-se1= strel ('square', 10);                                      %S'utilitza un element estructural de la imatge en forma de quadrat d'un ample de 10 pÌxels. 
+se1= strel ('square', 10);                                      %S'utilitza un element estructural de la imatge en forma de quadrat d'un ample de 10 p√≠xels. 
 imf2=imopen(imf1,se1);                                          %Es fa una apertura de la imatge resultant.
 %se2 = strel ('disk', 25);                                       %S'utilitza un element estructural de la imatge en forma de disc de radi 25.
-imf3=imerode(imf2,se);                                         %Es fa una erosiÛ de la imatge resultant.
-se3 = strel ('line',15,0);                                      %S'utilitza un element estructural de la imatge en forma de lÌnea de llargada 15 i angle de 0 graus. 
-imf4=imerode(imf3,se3);                                         %Es fa una erosiÛ de la imatge resultant. 
+imf3=imerode(imf2,se);                                         %Es fa una erosi√≥ de la imatge resultant.
+se3 = strel ('line',15,0);                                      %S'utilitza un element estructural de la imatge en forma de l√≠nea de llargada 15 i angle de 0 graus. 
+imf4=imerode(imf3,se3);                                         %Es fa una erosi√≥ de la imatge resultant. 
 
-%DesprÈs de diverses proves amb totes les fotografies en les diferents
+%Despr√©s de diverses proves amb totes les fotografies en les diferents
 %condicions de llum veiem que els objectes de les imatges queden separats
-%amb la combinaciÛ dels filtres aplicada. 
+%amb la combinaci√≥ dels filtres aplicada. 
 
 %-----------------------------------------------------------------------------
 %2. Etiquetat
@@ -46,18 +44,18 @@ imf4=imerode(imf3,se3);                                         %Es fa una erosi
 figure,imshow(L,[]);                                              %Es visualitza la imatge etiquetada a la pantalla. 
 
 %-----------------------------------------------------------------------------
-%4. C‡lcul de propietats:
+%4. C√†lcul de propietats:
 %-----------------------------------------------------------------------------
 
-%S'observa que a la majoria les fotografies el segon objecte detectat Ès la peÁa
-%a classificar perÚ en algunes poc il∑luminades nomÈs detecta un sol
-%objecte (la peÁa). Per aixÚ depenent del n˙mero d'objectes detectats a la
-%imatge s'escull el primer o el segon objecte per fer el c‡lcul de
+%S'observa que a la majoria les fotografies el segon objecte detectat √©s la pe√ßa
+%a classificar per√≤ en algunes poc il¬∑luminades nom√©s detecta un sol
+%objecte (la pe√ßa). Per aix√≤ depenent del n√∫mero d'objectes detectats a la
+%imatge s'escull el primer o el segon objecte per fer el c√†lcul de
 %propietats. 
 
 Propietats=zeros([1 5])
 
-%C‡lcul de l'‡rea
+%C√†lcul de l'√†rea
 Ar=regionprops(L,'Area');
 if n>1 
     Propietats(1)=Ar(2).Area(1)
@@ -65,7 +63,7 @@ else
     Propietats(1)=Ar(1).Area(1)
 end
 
-%C‡lcul de la circularitat/excentricitat
+%C√†lcul de la circularitat/excentricitat
 Ecc=regionprops(L,'Eccentricity');
 if n>1 
     Propietats(2)=Ecc(2).Eccentricity(1)
@@ -73,7 +71,7 @@ else
     Propietats(2)=Ecc(1).Eccentricity(1)
 end
 
-%C‡lcul del di‡metre equivalent
+%C√†lcul del di√†metre equivalent
 Diam=regionprops(L,'EquivDiameter');
 if n>1 
     Propietats(3)=Diam(2).EquivDiameter(1)
@@ -81,7 +79,7 @@ else
     Propietats(3)=Diam(1).EquivDiameter(1)
 end
 
-%C‡lcul de l'amplada
+%C√†lcul de l'amplada
 Wid=regionprops(L,'MajorAxisLength');
 if n>1 
     Propietats(4)=Wid(2).MajorAxisLength(1)
@@ -89,7 +87,7 @@ else
     Propietats(4)=Wid(1).MajorAxisLength(1)
 end
 
-%C‡lcul del perÌmetre 
+%C√†lcul del per√≠metre 
 Per=regionprops(L,'Perimeter');
 if n>1 
     Propietats(5)=Per(2).Perimeter(1)
@@ -99,12 +97,12 @@ end
 
 
 %-----------------------------------------------------------------------------
-% presentaciÛ de resultats
+% presentaci√≥ de resultats
 %----------------
 
-if Propietats(2) > 0.85                      %ComparaciÛ entre el rectangle gran i la figura que s'ha de descartar
-    if Propietats(1) > 4000                 %Si l'‡rea Ès major de 4000, ser‡ l'objecte descartat
-        if Propietats(4) > 112               %Per acabar d'assegurar que es tracta d'un objecte o de l'altre es compara tambÈ l'amplada
+if Propietats(2) > 0.85                      %Comparaci√≥ entre el rectangle gran i la figura que s'ha de descartar
+    if Propietats(1) > 4000                 %Si l'√†rea √©s major de 4000, ser√† l'objecte descartat
+        if Propietats(4) > 112               %Per acabar d'assegurar que es tracta d'un objecte o de l'altre es compara tamb√© l'amplada
             ('Objecte: Error!')   
         else 
             ('Objecte: Rectangle gran') 
@@ -113,14 +111,14 @@ if Propietats(2) > 0.85                      %ComparaciÛ entre el rectangle gran
         ('Objecte: Rectangle gran')
     end
 else
-    if Propietats(3) > 54                  %ComparaciÛ entre el rectangle petit i el cercle utilitzant el di‡metre equivalent
+    if Propietats(3) > 54                  %Comparaci√≥ entre el rectangle petit i el cercle utilitzant el di√†metre equivalent
         if Propietats(2) > 0.6              %S'utilitza la propietat de l'excentricitat per diferenciar-los. 
             ('Objecte: Rectangle petit')
         else
             ('Objecte: Cercle')
         end
     else
-        if Propietats(1) > 1800            %ComparaciÛ entre el quadrat i el rectangle petit utilitzant l'‡rea per acabar de diferenciar tots els objectes
+        if Propietats(1) > 1800            %Comparaci√≥ entre el quadrat i el rectangle petit utilitzant l'√†rea per acabar de diferenciar tots els objectes
            ('Objecte: Rectangle petit')
         else
            ('Objecte: Quadrat')

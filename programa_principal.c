@@ -1,12 +1,12 @@
 // *****************************************************************************
-//                           øQuÈ es esto?
+//                           ¬øQu√© es esto?
 // *****************************************************************************
 /*
- Este es el programa propuesto para mi Real Case. Se lee la lÌnea de CAN1 cada
- 1 segundo y se manda esta informaciÛna al mÛdulo xBee mediante el protocolo 
+ Este es el programa propuesto para mi Real Case. Se lee la l√≠nea de CAN1 cada
+ 1 segundo y se manda esta informaci√≥na al m√≥dulo xBee mediante el protocolo 
  RS-232. 
  Para comprobar el funcionamiento del circuito sin canal de comunicaciones, se 
- ha incorporado tambiÈn una secuencia de parpadeo de LEDs. 
+ ha incorporado tambi√©n una secuencia de parpadeo de LEDs. 
  
  Este programa se ha implementado con el dsPIC33EP128GP502. 
  
@@ -14,12 +14,12 @@
  Nombre del programa:               real_case.c
  Programador:                       Marta Basquens
  
- e-Tech Racing 2018 ©
+ e-Tech Racing 2018 ¬©
  
  */
 
 /*--------------------------------------------------
-                     *    DEFINICI”N DE VARIABLES       *
+                     *    DEFINICI√ìN DE VARIABLES       *
  * 
                     -------------------------------------------------------*/
 
@@ -28,7 +28,7 @@ unsigned int flag_can1=0, data_can1_buff0=0,data_can1_buff1=0,data_can1_buff2=0,
 unsigned char contador, contador_1, flag_led, flag_CAN, n=0, flag_alive=0, cont_alive=0, rbuf_can1;
 
 /*--------------------------------------------------
-                     *    DEFINICI”N DE LIBRERÕAS       *
+                     *    DEFINICI√ìN DE LIBRER√çAS       *
  * 
                     -------------------------------------------------------*/
 
@@ -49,13 +49,13 @@ unsigned char contador, contador_1, flag_led, flag_CAN, n=0, flag_alive=0, cont_
 
 /*--------------------------------------------------
                      *    TIMER 2       *
- * Se entra en la interrupciÛn cada 5 ms. 
+ * Se entra en la interrupci√≥n cada 5 ms. 
                     -------------------------------------------------------*/
 
 void __attribute__((__interrupt__,no_auto_psv)) _T2Interrupt(void){
     contador++;
     TMR2 = 15536;                         // 65536 - 50000 (5 ms) 
-    IFS0bits.T2IF = 0;                    //PONE A 0 EL FLAG DE LA INTERRUPCI”N DEL TIMER 2
+    IFS0bits.T2IF = 0;                    //PONE A 0 EL FLAG DE LA INTERRUPCI√ìN DEL TIMER 2
     if (contador >= 20)                   // 20 x 5 ms = 100 ms 
     {
         contador=0;
@@ -64,19 +64,19 @@ void __attribute__((__interrupt__,no_auto_psv)) _T2Interrupt(void){
 }
 
 /*--------------------------------------------------
-                     *    INTERRUPCI”N UART       *
- * Cada vez que se transmite un car·cter y por lo tanto se vacÌa el buffer
- * del shift register, se manda el siguiente car·cter.
+                     *    INTERRUPCI√ìN UART       *
+ * Cada vez que se transmite un car√°cter y por lo tanto se vac√≠a el buffer
+ * del shift register, se manda el siguiente car√°cter.
                     -------------------------------------------------------*/
 
 void __attribute__((interrupt, no_auto_psv)) _U1TXInterrupt(void)
 {
-        IFS0bits.U1TXIF = 0;            // reset flag de interrupciÛn TX  uart  
+        IFS0bits.U1TXIF = 0;            // reset flag de interrupci√≥n TX  uart  
 }
 
 /*--------------------------------------------------
-                     *    INTERRUPCI”N CAN       *
- * Cada vez que se recibe un mensaje por la lÌnea de CAN1 se lee el mensaje. 
+                     *    INTERRUPCI√ìN CAN       *
+ * Cada vez que se recibe un mensaje por la l√≠nea de CAN1 se lee el mensaje. 
                     -------------------------------------------------------*/
 
 //CAN 1
@@ -113,7 +113,7 @@ void __attribute__ ( (interrupt, no_auto_psv) ) _DMA2Interrupt( void )
 
 int main(void){
  /*                 ////////
- *        INICIALIZACI”N DE CONFIGURACIONES        *
+ *        INICIALIZACI√ìN DE CONFIGURACIONES        *
                     ////////                        */
     
     oscillator_config();
@@ -131,7 +131,7 @@ int main(void){
     UART_config();
     
 /*                 ////////
- *            DEFINICI”N DE PUERTOS              *
+ *            DEFINICI√ìN DE PUERTOS              *
                     ////////                    */
     ANSELB = 0;                              // PUERTO B DIGITAL
     ANSELA = 0;                              // PUERTO A DIGITAL
@@ -178,7 +178,7 @@ int main(void){
                 else if (cobid_can1 == 0x91)             // si recibe el cobid de los sensores de APPS1, APPS2, Brake y Steering
                 {
                     leng_can1 = can1_getlength(rbuf_can1);           // extrae la longitud del mensaje del buffer
-                     data_can1_buff0 = can1_getdata(rbuf_can1,0);     // extrae la informaciÛn de la posiciÛn 0 del mensaje (2 primeros bytes)
+                     data_can1_buff0 = can1_getdata(rbuf_can1,0);     // extrae la informaci√≥n de la posici√≥n 0 del mensaje (2 primeros bytes)
                      data_can1_buff1 = can1_getdata(rbuf_can1,1);
                      data_can1_buff2 = can1_getdata(rbuf_can1,2);
                      data_can1_buff3 = can1_getdata(rbuf_can1,3);
@@ -215,6 +215,6 @@ int main(void){
 }
 
 
-//llegir cobid - 0x91 -> APPS1, APPS1, BRAKE, STEERING i enviar la seva informaiciÛ per UART 
-//envia cobid 0x600 (alive) cada 4 cops que rebi 0x80 (missatge de si est‡ viu o no)
-// cada cop envia un contador incremental (per saber que est‡ viu)
+//llegir cobid - 0x91 -> APPS1, APPS1, BRAKE, STEERING i enviar la seva informaici√≥ per UART 
+//envia cobid 0x600 (alive) cada 4 cops que rebi 0x80 (missatge de si est√† viu o no)
+// cada cop envia un contador incremental (per saber que est√† viu)
